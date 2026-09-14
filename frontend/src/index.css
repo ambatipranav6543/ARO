@@ -1,0 +1,528 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+:root {
+  /* ARO design system tokens (v1.0) - see docs/design system spec.
+     --color-brand-accent carries the spec's Navy primary color: it was
+     already used throughout the app as "the" interactive/brand color,
+     which is exactly Navy's documented role (logo, headings, primary
+     buttons, navigation). --color-info stays the separate, spec-defined
+     Information blue, reserved for evidence/informational content. */
+  --color-navy: #0b1220;
+  --color-slate: #475569;
+  --color-mist: #f1f5f9;
+  --color-ice: #dcebfa;
+  --color-aro-white: #fafaf9;
+
+  --color-primary-dark: #0b1220;
+  --color-sidebar-bg: #0f172a;
+  --color-sidebar-hover: #1e293b;
+  --color-sidebar-active: #16213a;
+  --color-sidebar-text: #cbd5e1;
+  --color-sidebar-heading: #94a3b8;
+  --color-brand-blue: #1e293b;
+  --color-brand-accent: #0b1220;
+  --color-brand-cyan: #dcebfa;
+  --color-brand-teal: #0d9488;
+  --color-app-bg: #fafaf9;
+  --color-surface: #ffffff;
+  --color-surface-hover: #f1f5f9;
+  --color-border: #e2e8f0;
+  --color-border-dark: #cbd5e1;
+  --color-text-primary: #0b1220;
+  --color-text-secondary: #475569;
+  --color-text-muted: #64748b;
+  --color-text-light: #94a3b8;
+  --color-success: #16a34a;
+  --color-success-bg: #f0fdf4;
+  --color-success-border: #bbf7d0;
+  --color-warning: #d97706;
+  --color-warning-bg: #fffbeb;
+  --color-warning-border: #fde68a;
+  --color-danger: #dc2626;
+  --color-danger-bg: #fef2f2;
+  --color-danger-border: #fecaca;
+  --color-info: #2563eb;
+  --color-info-bg: #eff6ff;
+  --color-info-border: #bfdbfe;
+  /* Softer, larger radii and lighter shadows than v1. The old 12px card on
+     a 3px shadow read as a boxy admin panel; a review tool people sit in
+     all day should feel calmer than that. */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --shadow-subtle: 0 1px 2px rgba(11, 18, 32, 0.04), 0 1px 3px rgba(11, 18, 32, 0.03);
+  --shadow-card: 0 2px 4px rgba(11, 18, 32, 0.04), 0 12px 32px rgba(11, 18, 32, 0.07);
+  --shadow-modal: 0 24px 60px rgba(11, 18, 32, 0.16);
+  --shadow-inset-top: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-app-bg);
+  color: var(--color-text-primary);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* The shell is exactly one viewport tall and the main column does the
+   scrolling. Without pinning the height, the sidebar's own 100vh ended
+   partway down a taller page and left a dark void beneath it. */
+.app-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* Full shell height on desktop; the stacked mobile layout overrides it so
+   the nav doesn't take a whole screen before the content starts. */
+.aro-sidebar {
+  height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  /* A quiet, cool ground carrying a trace of the brand's ice blue. Held
+     well below the cards in saturation on purpose: white surfaces have to
+     read as raised, and the old full-strength wash competed with them. */
+  background:
+    radial-gradient(120% 90% at 12% 0%, rgba(220, 235, 250, 0.55) 0%, rgba(220, 235, 250, 0) 55%),
+    linear-gradient(180deg, #f7f9fc 0%, #eef2f7 100%);
+  background-attachment: local;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+.page-container {
+  flex: 1;
+  padding: 28px 34px 56px;
+  max-width: 1480px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-subtle);
+  padding: 22px 24px;
+}
+
+/* One filled panel per screen, for the thing the page is actually about.
+   Everything else stays neutral so this reads as the focal point rather
+   than one more card in a stack of identical cards. */
+.card-feature {
+  background: linear-gradient(145deg, #0b1220 0%, #16213a 55%, #1e293b 100%);
+  border: 1px solid #16213a;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card), var(--shadow-inset-top);
+  color: #ffffff;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Card title = spec H4 (20px/28px/600) */
+.card-title {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  letter-spacing: -0.005em;
+}
+
+/* Card subtitle = spec Small (14px/20px/400) */
+.card-subtitle {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--color-text-muted);
+  margin-top: 3px;
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 16px;
+}
+
+/* Page title = spec H2 (30px/38px/600) - page titles sit one level below
+   the Display scale used only for the landing hero. */
+.page-title {
+  font-size: 30px;
+  line-height: 38px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+}
+
+/* Page subtitle = spec Body Large (16px/24px/400) */
+.page-subtitle {
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-text-secondary);
+  margin-top: 6px;
+  max-width: 780px;
+}
+
+.grid-cols-4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.grid-cols-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.grid-cols-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.grid-cols-1 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #0b1220, #1e293b);
+  color: #ffffff;
+  border-color: #0b1220;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #131f33, #26364b);
+  border-color: #131f33;
+}
+
+.btn-secondary {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-dark);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--color-surface-hover);
+  border-color: var(--color-text-muted);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-brand-accent);
+  border-color: var(--color-brand-accent);
+}
+
+.btn-outline:hover:not(:disabled) {
+  background-color: var(--color-info-bg);
+}
+
+.btn-success {
+  background-color: var(--color-success);
+  color: #ffffff;
+  border-color: var(--color-success);
+}
+
+.btn-success:hover:not(:disabled) {
+  background-color: #15803d;
+}
+
+.btn-danger {
+  background-color: var(--color-danger);
+  color: #ffffff;
+  border-color: var(--color-danger);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background-color: #b91c1c;
+}
+
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+.btn-lg {
+  padding: 11px 22px;
+  font-size: 15px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.badge-critical, .badge-danger {
+  background-color: var(--color-danger-bg);
+  color: var(--color-danger);
+  border-color: var(--color-danger-border);
+}
+
+.badge-high, .badge-warning {
+  background-color: var(--color-warning-bg);
+  color: var(--color-warning);
+  border-color: var(--color-warning-border);
+}
+
+.badge-medium, .badge-info {
+  background-color: var(--color-info-bg);
+  color: var(--color-info);
+  border-color: var(--color-info-border);
+}
+
+.badge-low, .badge-neutral {
+  background-color: #f1f5f9;
+  color: #475569;
+  border-color: #cbd5e1;
+}
+
+.badge-verified, .badge-success {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+  border-color: var(--color-success-border);
+}
+
+.badge-material {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border-color: #fca5a5;
+  font-weight: 700;
+}
+
+.badge-non-material {
+  background-color: #f1f5f9;
+  color: #64748b;
+  border-color: #e2e8f0;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+}
+
+.enterprise-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+
+.enterprise-table th {
+  background-color: #f8fafc;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+.enterprise-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  vertical-align: middle;
+}
+
+.enterprise-table tr:last-child td {
+  border-bottom: none;
+}
+
+.enterprise-table tr:hover td {
+  background-color: #f8fafc;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.form-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.form-input {
+  width: 100%;
+  padding: 9px 12px;
+  font-size: 13px;
+  border: 1px solid var(--color-border-dark);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-brand-accent);
+  box-shadow: 0 0 0 3px rgba(220, 235, 250, 0.6);
+}
+
+.form-select {
+  padding: 9px 12px;
+  font-size: 13px;
+  border: 1px solid var(--color-border-dark);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+}
+
+.form-error {
+  font-size: 12px;
+  color: var(--color-danger);
+  margin-top: 4px;
+}
+
+/* Display = spec Display scale (56px/64px/600), landing hero only. */
+.display-heading {
+  font-size: 56px;
+  line-height: 64px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+@keyframes aro-fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes aro-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(26px, -20px) scale(1.06); }
+}
+
+.aro-fade-up {
+  animation: aro-fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.aro-drift {
+  animation: aro-drift 16s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aro-fade-up, .aro-drift {
+    animation: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .display-heading {
+    font-size: 36px;
+    line-height: 44px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .grid-cols-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .page-container {
+    padding: 20px 20px 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Stacked layout scrolls the page itself, so the shell must grow. */
+  .app-container {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+  .main-content {
+    height: auto;
+    overflow-y: visible;
+  }
+  .aro-sidebar {
+    height: auto;
+    width: 100% !important;
+  }
+  .grid-cols-4, .grid-cols-3, .grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

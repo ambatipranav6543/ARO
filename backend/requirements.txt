@@ -1,0 +1,18 @@
+# Core runtime deps (installed in the setup venv).
+fastapi>=0.141
+uvicorn[standard]>=0.52
+pydantic>=2.13
+pydantic-settings>=2.15
+
+# Day 1 architecture + data: storage + tabular ingestion
+sqlalchemy>=2.0
+pandas>=2.2
+numpy>=1.26
+openpyxl>=3.1
+python-multipart>=0.0.9
+
+# RAG: vector store + bundled embedding function (no torch dependency).
+chromadb>=0.5
+
+# Added per milestone as feature layers are implemented:
+# Day 4 agent         — hackathon-approved LLM SDK (e.g. openai / anthropic)

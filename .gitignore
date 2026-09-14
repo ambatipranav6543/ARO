@@ -1,0 +1,24 @@
+# Python (backend)
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.db
+backend/.env
+
+# RAG artifacts
+backend/data/vector_store/
+
+# Node (frontend)
+node_modules/
+dist/
+dist-ssr/
+
+# Env / local / editor
+.env
+*.local
+*.log
+.DS_Store
+.idea/
+.vscode/
