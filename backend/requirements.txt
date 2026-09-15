@@ -13,6 +13,7 @@ python-multipart>=0.0.9
 
 # RAG: vector store + bundled embedding function (no torch dependency).
 chromadb>=0.5
+httpx>=0.28
 
 # Added per milestone as feature layers are implemented:
 # Day 4 agent         — hackathon-approved LLM SDK (e.g. openai / anthropic)

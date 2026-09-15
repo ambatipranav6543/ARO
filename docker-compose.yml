@@ -1,0 +1,32 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./fsra.db
+      - VECTOR_STORE_PATH=./data/vector_store
+      - CORS_ORIGINS=["http://localhost", "http://localhost:5173", "http://localhost:80"]
+      - LLM_PROVIDER=${LLM_PROVIDER:-}
+      - LLM_MODEL=${LLM_MODEL:-}
+      - GROQ_API_KEY=${GROQ_API_KEY:-}
+    volumes:
+      - backend_data:/app/data
+      - backend_db:/app
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_BASE_URL=
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  backend_data:
+  backend_db:
